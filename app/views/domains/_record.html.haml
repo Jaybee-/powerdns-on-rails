@@ -4,7 +4,7 @@
     %div{ :id => "record-template-delete-#{record.id}" }= t :label_domain_delete_record 
 
 %tr[ record, :marker ]
-%tr[ record, :show ]
+%tr{:class => cycle(:even, :odd)}[ record, :show ]
   %td{ :width => 250 }= record.shortname
   %td{ :width => 50 }= record.ttl
   %td{ :width => 30 }= record.type
