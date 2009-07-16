@@ -59,6 +59,16 @@ class Domain < ActiveRecord::Base
   def slave?
     self.type == 'SLAVE'
   end
+  
+  # Are we a master domain
+  def master?
+    self.type == 'MASTER'
+  end
+
+  # Are we a native domain
+  def native?
+    self.type == 'NATIVE'
+  end
 
   # return the records, excluding the SOA record
   def records_without_soa

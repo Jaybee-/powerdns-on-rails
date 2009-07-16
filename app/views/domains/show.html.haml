@@ -55,6 +55,12 @@
       %td= @domain.type.humanize
       %td &nbsp;
 
+    - if @domain.master?
+      %tr
+        %td= t :label_domain_serial
+        %td= @domain.notified_serial
+        %td &nbsp;
+
     - if @domain.slave?
       %tr
         %td= t :label_domain_master_server
