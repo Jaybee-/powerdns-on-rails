@@ -79,9 +79,22 @@ table.grid {
 table.gridwide {
     width: 100%;
 }
-.even {
-		background-color: #eee;
+table {
+  border-collapse: collapse;
 }
+table td,
+table th {
+  padding: 0.2em 0.5em;
+}
+table th {
+  text-align: left;
+  padding: 0.5em;
+}
+
+table .even {
+    background-color: #eee;
+}
+
 .small {
     font-size: 90%;
 }
@@ -173,8 +186,4 @@ ul.start li {
     padding-right: 10px;
     margin: 0;
     vertical-align: middle;
-}
-
-#recordtable .odd {
-		background-color: #eee;
 }

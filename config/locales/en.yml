@@ -151,6 +151,12 @@ en:
   label_domain_delete_record: "Delete this record"
   confirm_domain_delte_record: "Are you sure?"
 
+# Domains show
+  header_domain: "Domain"
+  header_type: "Type"
+  header_user: "User"
+  header_actions: "Actions"
+
 # Domains _new
   help_domain_fqdn:
     This is the fully qualified domain name (FQDN) of the domain.
