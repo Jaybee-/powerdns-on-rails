@@ -529,6 +529,7 @@ en:
 # sessions_controller
   message_user_logged: "Logged in successfully"
   message_user_logout: "You have been logged out."
+  message_wrong_user_or_password: "Wrong username and/or password"
 
 # users_controller
   message_user_created: "User created"

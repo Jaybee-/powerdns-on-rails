@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
       redirect_back_or_default( root_path )
       flash[:notice] = t(:message_user_logged)
     else
+      flash[:error] = t(:message_wrong_user_or_password)
       render :action => 'new'
     end
   end
