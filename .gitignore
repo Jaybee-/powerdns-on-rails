@@ -1,3 +1,5 @@
 nbproject
 *.log
 doc/api*
+*.swp
+config/database.yml
