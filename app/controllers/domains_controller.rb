@@ -62,7 +62,8 @@ class DomainsController < ApplicationController
 
       unless @zone_template.nil?
         begin
-          @domain = @zone_template.build( params[:domain][:name] )
+          #@domain = @zone_template.build( params[:domain][:name] )
+          @zone_template.apply!( @domain )
         rescue ActiveRecord::RecordInvalid => e
           @domain.attach_errors(e)
         end
