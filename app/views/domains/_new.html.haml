@@ -1,4 +1,33 @@
-/ These divs contain the help information.
+:javascript
+  function zone_template_changed() {
+    if( $('domain_zone_template_id').value == "" ) {
+      $('no-template-input').show();
+    }
+    else {
+      $('no-template-input').hide();
+    }
+  }
+
+  function domain_type_changed() {
+    if( $('domain_type').value == "SLAVE" ) {
+      $('master-address').show();
+      $('zone-templates').hide();
+      $('no-template-input').hide();
+      $('domain_zone_template_id').value="";
+    }
+    else {
+      $('master-address').hide();
+      $('zone-templates').show();
+      zone_template_changed();
+    }
+  }
+
+  Event.observe(window, 'load', function() {
+    zone_template_changed(); 
+    domain_type_changed();
+  });
+
+// These divs contain the help information.
 %div{ :style => 'display: none' }
   #help-domain=t :help_domain_fqdn
   #help-primary-ns=t :help_domain_primary_ns
@@ -24,7 +53,7 @@
       %td=t :label_domain_type
       %td
         = f.select :type, ['NATIVE','MASTER','SLAVE']
-        = observe_field :domain_type, :function => "if(value == \"SLAVE\") { $('master-address').show(); $('zone-templates').hide(); $('no-template-input').hide(); } else { $('master-address').hide(); $('zone-templates').show(); $('no-template-input').show(); }"
+        = observe_field :domain_type, :function => "domain_type_changed()"
       %td= prototip_help_icon('help-type')
     %tr#master-address{ :style => 'display: none' }
       %td=t :label_domain_master_address
@@ -35,14 +64,14 @@
       %td
         - if @zone_templates.size > 0
           = f.collection_select( :zone_template_id, @zone_templates, :id, :name, :include_blank => true )
-          = observe_field :domain_zone_template_id, :function =>"if(value == \"\") $('no-template-input').show(); else $('no-template-input').hide()", :on => 'select'
+          = observe_field :domain_zone_template_id, :function => "zone_template_changed()"
+
         - else
           %em
             =link_to((t :label_create_zone_templates), new_zone_template_path)
             =t :label_zone_for_eazy_management
       %td &nbsp;
-    
-    
+
   #no-template-input
     %table.grid
       %tr
