@@ -12,6 +12,8 @@ require 'scoped_finders'
 class Domain < ActiveRecord::Base
 
   scope_user
+  
+  default_scope :order => 'name'
 
   belongs_to :user
 
