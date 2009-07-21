@@ -274,6 +274,9 @@ en:
   help_delete_domain: "Delete this domain from the system"
   label_add_new_zone: "Add new zone"
   title_domains_list: "Domains"
+  x_domains:
+    one:   "1 domain"
+    other: "{{count}} domains"
 
 # Domains new
   title_domain_new_zone: "New zone"

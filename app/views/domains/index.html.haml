@@ -18,4 +18,7 @@
 
   = render :partial => 'domain', :collection => @domains
 
+#collection-info
+  = t(:x_domains, :count => @domains.total_entries)
 = will_paginate @domains
+.clear

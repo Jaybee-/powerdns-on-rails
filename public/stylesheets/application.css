@@ -187,3 +187,43 @@ ul.start li {
     margin: 0;
     vertical-align: middle;
 }
+
+.clear {
+    clear: both;
+}
+
+#collection-info {
+    float: right;
+    font-weight: bold;
+    padding: 4px 6px;
+    margin: 1em 0em;
+}
+
+div.pagination {
+    margin: 1em 0em;
+}
+
+div.pagination span,
+div.pagination a {
+    display: block;
+    float: left;
+    padding: 4px 6px;
+    border: 1px solid steelblue;
+    margin-right: 2px;
+    color: steelblue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.pagination span.disabled {
+    color: silver;
+    border-color: silver;
+}
+
+div.pagination span.current {
+    background: steelblue;
+    color: #fff;
+}
+
+div.pagination a {
+}
