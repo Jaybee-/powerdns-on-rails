@@ -48,6 +48,11 @@ class Record < ActiveRecord::Base
     end
 
   end
+  
+  # Strip whitespace from beginning and end
+  def content=( value )
+    self[:content] = (value && value.strip)
+  end
 
   def shortname
     self[:name].gsub( /\.?#{self.domain.name}$/, '' )
