@@ -157,6 +157,19 @@ en:
   header_user: "User"
   header_actions: "Actions"
 
+  x_ttl_weeks:
+    one:  "1 week"
+    other:  "{{cound}} weeks"
+  x_ttl_days:
+    one:   "1 day"
+    other: "{{count}} days"
+  x_ttl_hours:
+    one:  "1 hour"
+    other: "{{count}} hours"
+  x_ttl_minutes:
+    one:  "1 minute"
+    other:  "{{count}} minutes"
+
 # Domains _new
   help_domain_fqdn:
     This is the fully qualified domain name (FQDN) of the domain.
