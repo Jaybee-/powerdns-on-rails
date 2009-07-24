@@ -64,6 +64,9 @@ class DomainsController < ApplicationController
         begin
           #@domain = @zone_template.build( params[:domain][:name] )
           @zone_template.apply!( @domain )
+        # Hooks can cancel the save
+        rescue ActiveRecord::RecordNotSaved => e
+          @domain.attach_errors(e)
         rescue ActiveRecord::RecordInvalid => e
           @domain.attach_errors(e)
         end
@@ -114,11 +117,19 @@ class DomainsController < ApplicationController
   end
 
   def destroy
-    @domain.destroy
-
-    respond_to do |format|
-      format.html { redirect_to :action => 'index' }
-      format.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :no_content }
+    if @domain.destroy
+      respond_to do |wants|      
+        wants.html { redirect_to :action => 'index' }
+        wants.xml { render :xml => @domain.errors, :status => :unprocessable_entity }
+      end
+    else
+      respond_to do |wants|
+        wants.html do
+          flash[:error] = @domain.errors.full_messages.join("<br/>")
+          redirect_to domain_path(@domain)
+        end
+        wants.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :no_content }
+      end
     end
   end
 

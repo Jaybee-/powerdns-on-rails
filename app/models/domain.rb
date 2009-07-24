@@ -1,13 +1,5 @@
 require 'scoped_finders'
 
-class DomainHook2 < Hook::Base
-  def self.on_create(domain)
-    p "DomainHook"
-    return true if domain.slave?
-    return false unless domain.valid?
-    p "Try to create domain"
-  end
-end
 # = Domain
 #
 # A #Domain is a unique domain name entry, and contains various #Record entries to
@@ -68,17 +60,17 @@ class Domain < ActiveRecord::Base
 
   # Are we a slave domain
   def slave?
-    self.type == 'SLAVE'
+    read_attribute(:type) == 'SLAVE'
   end
   
   # Are we a master domain
   def master?
-    self.type == 'MASTER'
+    read_attribute(:type) == 'MASTER'
   end
 
   # Are we a native domain
   def native?
-    self.type == 'NATIVE'
+    read_attribute(:type) == 'NATIVE'  
   end
 
   # return the records, excluding the SOA record
@@ -95,7 +87,7 @@ class Domain < ActiveRecord::Base
   alias_method_chain :to_xml, :cleanup
 
   # Expand our validations to include SOA details
-  def after_validation_on_create #:nodoc:
+  def validation_on_create #:nodoc:
     return if slave?
     soa = SOA.new( :domain => self )
     SOA_FIELDS.each do |f|
@@ -115,14 +107,14 @@ class Domain < ActiveRecord::Base
     # Invoke before_create hook
     # The hook should return true if the record is to be saved or false 
     # to cancel. If one of the hooks returns false the save is canceled.
-    Hook.execute(:on_create, self).inject{|r,e| r&&e}
+    Hook.execute(:on_create, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}
   end 
   
   def before_destroy
     # Invoke before_create hook
     # The hook should return true if the record is to be saved or false 
     # to cancel. If one of the hooks returns false the save is canceled.
-    Hook.execute(:on_destroy, self).inject{|r,e| r&&e}  
+    Hook.execute(:on_destroy, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}  
   end
   
   # Setup an SOA if we have the requirements
