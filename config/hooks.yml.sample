@@ -1,4 +1,4 @@
 powerdns_nettica/domain_hook:
   enabled: true
-  nettica_username: janage
-  nettica_password: testing1234
+  nettica_username: your-username
+  nettica_password: your-password
