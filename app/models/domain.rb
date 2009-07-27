@@ -1,5 +1,13 @@
 require 'scoped_finders'
 
+class DomainHook2 < Hook::Base
+  def self.on_create(domain)
+    p "DomainHook"
+    return true if domain.slave?
+    return false unless domain.valid?
+    p "Try to create domain"
+  end
+end
 # = Domain
 #
 # A #Domain is a unique domain name entry, and contains various #Record entries to
@@ -88,19 +96,35 @@ class Domain < ActiveRecord::Base
 
   # Expand our validations to include SOA details
   def after_validation_on_create #:nodoc:
+    return if slave?
     soa = SOA.new( :domain => self )
     SOA_FIELDS.each do |f|
       soa.send( "#{f}=", send( f ) )
     end
     soa.serial = serial unless serial.nil? # Optional
 
+    # These errors will never be displayed unless other errors are triggered
     unless soa.valid?
       soa.errors.each_full do |e|
         errors.add_to_base e
       end
     end
   end
-
+  
+  def before_create
+    # Invoke before_create hook
+    # The hook should return true if the record is to be saved or false 
+    # to cancel. If one of the hooks returns false the save is canceled.
+    Hook.execute(:on_create, self).inject{|r,e| r&&e}
+  end 
+  
+  def before_destroy
+    # Invoke before_create hook
+    # The hook should return true if the record is to be saved or false 
+    # to cancel. If one of the hooks returns false the save is canceled.
+    Hook.execute(:on_destroy, self).inject{|r,e| r&&e}  
+  end
+  
   # Setup an SOA if we have the requirements
   def after_create #:nodoc:
     return if self.slave?
