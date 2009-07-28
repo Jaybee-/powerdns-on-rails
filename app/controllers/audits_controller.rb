@@ -3,7 +3,7 @@ class AuditsController < ApplicationController
   require_role "admin"
   
   def index
-    
+    @audits = Audit.all(:order => "created_at desc", :limit => 50)
   end
   
   # Retrieve the audit details for a domain
