@@ -78,7 +78,7 @@ class DomainsController < ApplicationController
     respond_to do |format|
       if @domain.save
         format.html { 
-          flash[:info] = t(:message_domain_created)
+          flash[:info] = t( :message_domain_created, :domain => @domain.name )
           redirect_to domain_path( @domain ) 
         }
         format.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :created, :location => domain_url( @domain ) }
@@ -100,7 +100,7 @@ class DomainsController < ApplicationController
     if @domain.update_attributes(params[:domain])
       respond_to do |wants|
         wants.html do
-          flash[:info] = t(:message_domain_updated)
+          flash[:info] = t(:message_domain_updated, :domain => @domain.name)
           redirect_to domain_path(@domain)
         end
         wants.xml { render :xml => @domain.to_xml(:include => [:records]), :location => domain_url(@domain) }
@@ -119,7 +119,10 @@ class DomainsController < ApplicationController
   def destroy
     if @domain.destroy
       respond_to do |wants|      
-        wants.html { redirect_to :action => 'index' }
+        wants.html do
+          flash[:notice] = t( :message_domain_deleted, :domain => @domain.name )
+          redirect_to :action => 'index'
+        end
         wants.xml { render :xml => @domain.errors, :status => :unprocessable_entity }
       end
     else

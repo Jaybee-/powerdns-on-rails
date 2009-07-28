@@ -529,8 +529,9 @@ en:
     Missing parameter auth-token
 
 # domains
-  message_domain_created: "Domain created"
-  message_domain_updated: "Domain updated"
+  message_domain_created: "Domain {{domain}} created"
+  message_domain_updated: "Domain {{domain}} updated"
+  message_domain_deleted: "Domain {{domain}} deleted"
   message_domain_macro_applied: "Macro applied to domain"
 
 # macro_steps_controller
