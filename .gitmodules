@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/powerdns-nettica"]
-	path = vendor/plugins/powerdns-nettica
-	url = git@github.com:jjohnsen/powerdns-nettica.git

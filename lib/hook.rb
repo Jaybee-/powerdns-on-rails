@@ -36,6 +36,6 @@ module Hook
   end
   
   def self.config_for(subclass)
-    self.config[subclass] || {}
+    self.config[subclass.to_s.underscore] || {}
   end
 end
