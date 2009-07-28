@@ -3,3 +3,5 @@ nbproject
 doc/api*
 *.swp
 config/database.yml
+config/hooks.yml
+tmp/*
