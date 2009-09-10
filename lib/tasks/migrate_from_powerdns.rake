@@ -11,6 +11,7 @@
 ################################################################################
 
 require 'iconv'
+require 'fix_already_loading_missing_dependencies'
 
 namespace :migrate do
 
@@ -18,7 +19,6 @@ namespace :migrate do
   task :powerdns => :environment do
 
     module PowerDnsMigration
-
       ###
       # Config values
       ##
@@ -164,6 +164,7 @@ namespace :migrate do
 
               # save and report
               unless record.save
+		
                 logger.warn "** Could not save record imported from #{pdns_record.name} (#{pdns_record.type})"
                 logger.warn "** ActiveRecord said: #{record.errors.full_messages.join(', ')}"
                 print '!'

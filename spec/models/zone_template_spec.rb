@@ -130,7 +130,25 @@ describe ZoneTemplate, "when used to build a zone" do
     
     ns.each { |r| r.should be_a_kind_of( NS ) }
   end
+end
+
+describe ZoneTemplate, "when applied to a domain" do
+  fixtures :all
   
+  before(:each) do
+    @zone_template = zone_templates( :east_coast_dc )
+    @domain = Domain.new( :name => "example.org", :ttl => 43200 )
+    @zone_template.apply!(@domain)
+  end
+  
+  it "should create a valid new zone" do
+    @domain.should be_valid
+    @domain.should be_a_kind_of( Domain )
+  end
+
+  it "should set ttl" do
+    @domain.ttl.should eql( zone_templates( :east_coast_dc ).ttl )
+  end
 end
 
 describe ZoneTemplate, "when used to build a zone for a user" do

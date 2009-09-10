@@ -3,7 +3,7 @@ class CreateRecords < ActiveRecord::Migration
     create_table :records do |t|
       t.integer :domain_id, :null => false
       t.string :name, :null => false
-      t.string :type, :null => false
+      t.string :type, :null => false, :limit => 16
       t.string :content, :null => false
       t.integer :ttl, :null => false
       t.integer :prio

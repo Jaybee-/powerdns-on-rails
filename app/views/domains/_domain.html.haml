@@ -1,6 +1,11 @@
-%tr
+%tr{:class => cycle(:even, :odd)}
   %td
     = link_to domain.name, domain_path( domain )
+  %td
+    = domain.type.capitalize
+  %td
+    - if domain.user
+      = link_to domain.user.login, user_path( domain.user )
   %td &nbsp;
   %td
     = link_to prototip_info_icon('table_edit.png', 'zone-edit'), edit_domain_path(domain)

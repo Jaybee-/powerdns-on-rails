@@ -24,7 +24,7 @@ class Record < ActiveRecord::Base
   after_save  :update_soa_serial
 
   # Known record types
-  @@record_types = ['A', 'AAAA', 'CNAME', 'LOC', 'MX', 'NS', 'PTR', 'SOA', 'SPF', 'SRV', 'TXT']
+  @@record_types = ['A', 'AAAA', 'CNAME', 'LOC', 'MX', 'NS', 'PTR', 'SOA', 'SPF', 'SRV', 'SSHFP', 'TXT']
   cattr_reader :record_types
 
   class << self
@@ -47,6 +47,11 @@ class Record < ActiveRecord::Base
       write_inheritable_attribute :non_audited_columns, defaults.flatten.map(&:to_s)
     end
 
+  end
+  
+  # Strip whitespace from beginning and end
+  def content=( value )
+    self[:content] = (value && value.strip)
   end
 
   def shortname
