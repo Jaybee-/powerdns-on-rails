@@ -4,7 +4,7 @@
 # MySQL development
 development:
   adapter: mysql
-  database: powerdns_development
+  database: pdns_dev
   host: localhost
   username: root
   password:
@@ -14,10 +14,10 @@ development:
 # Do not set this db to the same as development or production.
 test: &TEST
   adapter: mysql
-  database: powerdns_test
-  host: localhost
-  username: root
-  password:
+  database: pdns_test
+#  host: localhost
+#  username: root
+#  password:
 
 production:
   adapter: mysql
