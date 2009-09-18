@@ -159,7 +159,7 @@ en:
 
   x_ttl_weeks:
     one:  "1 week"
-    other:  "{{cound}} weeks"
+    other:  "{{count}} weeks"
   x_ttl_days:
     one:   "1 day"
     other: "{{count}} days"
