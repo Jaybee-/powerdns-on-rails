@@ -138,6 +138,9 @@ describe ZoneTemplate, "when used to build a zone" do
 
     ns.each { |r| r.should be_a_kind_of( NS ) }
   end
+<<<<<<< HEAD
+
+=======
 end
 
 describe ZoneTemplate, "when applied to a domain" do
@@ -157,6 +160,7 @@ describe ZoneTemplate, "when applied to a domain" do
   it "should set ttl" do
     @domain.ttl.should eql( zone_templates( :east_coast_dc ).ttl )
   end
+>>>>>>> b93816b45707ee08b94a22bf2225cf5f29ad9af5
 end
 
 describe ZoneTemplate, "when used to build a zone for a user" do

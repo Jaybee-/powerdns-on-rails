@@ -1,6 +1,7 @@
 nbproject
 *.log
 doc/api*
-doc/app/*
-doc/guides/*
 *.swp
+config/database.yml
+config/hooks.yml
+tmp/*

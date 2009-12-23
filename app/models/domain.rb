@@ -12,6 +12,8 @@ require 'scoped_finders'
 class Domain < ActiveRecord::Base
 
   scope_user
+  
+  default_scope :order => 'name'
 
   belongs_to :user
 
@@ -27,6 +29,7 @@ class Domain < ActiveRecord::Base
   has_many :aaaa_records,  :class_name => 'AAAA'
   has_many :spf_records,   :class_name => 'SPF'
   has_many :srv_records,   :class_name => 'SRV'
+  has_many :sshfp_records, :class_name => 'SSHFP'
   has_many :ptr_records,   :class_name => 'PTR'
 
   validates_presence_of :name
@@ -57,7 +60,17 @@ class Domain < ActiveRecord::Base
 
   # Are we a slave domain
   def slave?
-    self.type == 'SLAVE'
+    read_attribute(:type) == 'SLAVE'
+  end
+  
+  # Are we a master domain
+  def master?
+    read_attribute(:type) == 'MASTER'
+  end
+
+  # Are we a native domain
+  def native?
+    read_attribute(:type) == 'NATIVE'  
   end
 
   # return the records, excluding the SOA record
@@ -83,20 +96,36 @@ class Domain < ActiveRecord::Base
   alias_method_chain :to_xml, :cleanup
 
   # Expand our validations to include SOA details
-  def after_validation_on_create #:nodoc:
+  def validation_on_create #:nodoc:
+    return if slave?
     soa = SOA.new( :domain => self )
     SOA_FIELDS.each do |f|
       soa.send( "#{f}=", send( f ) )
     end
     soa.serial = serial unless serial.nil? # Optional
 
+    # These errors will never be displayed unless other errors are triggered
     unless soa.valid?
       soa.errors.each_full do |e|
         errors.add_to_base e
       end
     end
   end
-
+  
+  def before_create
+    # Invoke before_create hook
+    # The hook should return true if the record is to be saved or false 
+    # to cancel. If one of the hooks returns false the save is canceled.
+    Hook.execute(:on_create, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}
+  end 
+  
+  def before_destroy
+    # Invoke before_create hook
+    # The hook should return true if the record is to be saved or false 
+    # to cancel. If one of the hooks returns false the save is canceled.
+    Hook.execute(:on_destroy, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}  
+  end
+  
   # Setup an SOA if we have the requirements
   def after_create #:nodoc:
     return if self.slave?

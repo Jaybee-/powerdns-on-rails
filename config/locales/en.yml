@@ -151,6 +151,25 @@ en:
   label_domain_delete_record: "Delete this record"
   confirm_domain_delte_record: "Are you sure?"
 
+# Domains show
+  header_domain: "Domain"
+  header_type: "Type"
+  header_user: "User"
+  header_actions: "Actions"
+
+  x_ttl_weeks:
+    one:  "1 week"
+    other:  "{{count}} weeks"
+  x_ttl_days:
+    one:   "1 day"
+    other: "{{count}} days"
+  x_ttl_hours:
+    one:  "1 hour"
+    other: "{{count}} hours"
+  x_ttl_minutes:
+    one:  "1 minute"
+    other:  "{{count}} minutes"
+
 # Domains _new
   help_domain_fqdn:
     This is the fully qualified domain name (FQDN) of the domain.
@@ -238,6 +257,7 @@ en:
   confirm_delete_this_domain: "Yes I am sure I want to delete this domain."
   confirm_domain_delete: "Are you sure you want to remove domain {{domain}}?"
 
+  label_domain_serial: "Serial"
   label_domain_master_server: "Master server"
   label_domain_owner: "Owner"
   label_domain_notes: "Notes"
@@ -267,6 +287,9 @@ en:
   help_delete_domain: "Delete this domain from the system"
   label_add_new_zone: "Add new zone"
   title_domains_list: "Domains"
+  x_domains:
+    one:   "1 domain"
+    other: "{{count}} domains"
 
 # Domains new
   title_domain_new_zone: "New zone"
@@ -506,8 +529,9 @@ en:
     Missing parameter auth-token
 
 # domains
-  message_domain_created: "Domain created"
-  message_domain_updated: "Domain updated"
+  message_domain_created: "Domain {{domain}} created"
+  message_domain_updated: "Domain {{domain}} updated"
+  message_domain_deleted: "Domain {{domain}} deleted"
   message_domain_macro_applied: "Macro applied to domain"
 
 # macro_steps_controller
@@ -528,6 +552,7 @@ en:
 # sessions_controller
   message_user_logged: "Logged in successfully"
   message_user_logout: "You have been logged out."
+  message_wrong_user_or_password: "Wrong username and/or password"
 
 # users_controller
   message_user_created: "User created"

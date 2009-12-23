@@ -106,7 +106,19 @@ describe DomainsController, "when creating" do
 
     response.should be_redirect
   end
+  
+  it "should not ignore type if zone template is selected" do
+    zone_template = zone_templates(:east_coast_dc)
 
+    post 'create', :domain => {
+      :name => 'example.org',
+      :type => 'MASTER',
+      :master => '127.0.0.1',
+      :zone_template_id => zone_template.id
+    } 
+  
+    assigns[:domain].should be_master
+  end 
 end
 
 describe DomainsController do

@@ -36,4 +36,34 @@ module ApplicationHelper
     link_to "Cancel", path
   end
 
+  # Convert ttl in seconds to a more human readable format
+  def human_readable_ttl( seconds )
+	minute 	= 60
+	hour	= minute*60
+	day	= hour*24
+	week	= day*7
+        
+        out = []
+        if seconds >= week
+          out << t(:x_ttl_weeks, :count => (seconds/week))
+          seconds %= week
+        end
+
+        if seconds >= day
+          out << t(:x_ttl_days, :count => (seconds/day))
+          seconds %= day
+        end
+
+        if seconds >= hour
+          out << t(:x_ttl_hours, :count => (seconds/hour))
+          seconds %= hour
+        end
+
+        if seconds >= minute
+          out << t(:x_ttl_minutes, :count => (seconds/minute))
+          seconds %= minute
+        end
+    out.join(' ')
+  end
+
 end

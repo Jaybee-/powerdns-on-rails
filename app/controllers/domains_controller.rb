@@ -62,7 +62,11 @@ class DomainsController < ApplicationController
 
       unless @zone_template.nil?
         begin
-          @domain = @zone_template.build( params[:domain][:name] )
+          #@domain = @zone_template.build( params[:domain][:name] )
+          @zone_template.apply!( @domain )
+        # Hooks can cancel the save
+        rescue ActiveRecord::RecordNotSaved => e
+          @domain.attach_errors(e)
         rescue ActiveRecord::RecordInvalid => e
           @domain.attach_errors(e)
         end
@@ -74,7 +78,7 @@ class DomainsController < ApplicationController
     respond_to do |format|
       if @domain.save
         format.html { 
-          flash[:info] = t(:message_domain_created)
+          flash[:info] = t( :message_domain_created, :domain => @domain.name )
           redirect_to domain_path( @domain ) 
         }
         format.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :created, :location => domain_url( @domain ) }
@@ -96,7 +100,7 @@ class DomainsController < ApplicationController
     if @domain.update_attributes(params[:domain])
       respond_to do |wants|
         wants.html do
-          flash[:info] = t(:message_domain_updated)
+          flash[:info] = t(:message_domain_updated, :domain => @domain.name)
           redirect_to domain_path(@domain)
         end
         wants.xml { render :xml => @domain.to_xml(:include => [:records]), :location => domain_url(@domain) }
@@ -113,11 +117,22 @@ class DomainsController < ApplicationController
   end
 
   def destroy
-    @domain.destroy
-
-    respond_to do |format|
-      format.html { redirect_to :action => 'index' }
-      format.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :no_content }
+    if @domain.destroy
+      respond_to do |wants|      
+        wants.html do
+          flash[:notice] = t( :message_domain_deleted, :domain => @domain.name )
+          redirect_to :action => 'index'
+        end
+        wants.xml { render :xml => @domain.errors, :status => :unprocessable_entity }
+      end
+    else
+      respond_to do |wants|
+        wants.html do
+          flash[:error] = @domain.errors.full_messages.join("<br/>")
+          redirect_to domain_path(@domain)
+        end
+        wants.xml { render :xml => @domain.to_xml(:include => [:records]), :status => :no_content }
+      end
     end
   end
 
