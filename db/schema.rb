@@ -92,13 +92,13 @@ ActiveRecord::Schema.define(:version => 20090505124622) do
   end
 
   create_table "records", :force => true do |t|
-    t.integer  "domain_id",   :null => false
-    t.string   "name",        :null => false
-    t.string   "type",        :null => false
-    t.string   "content",     :null => false
-    t.integer  "ttl",         :null => false
+    t.integer  "domain_id",                 :null => false
+    t.string   "name",                      :null => false
+    t.string   "type",        :limit => 16, :null => false
+    t.string   "content",                   :null => false
+    t.integer  "ttl",                       :null => false
     t.integer  "prio"
-    t.integer  "change_date", :null => false
+    t.integer  "change_date",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
