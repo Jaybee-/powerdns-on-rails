@@ -12,7 +12,7 @@ require 'scoped_finders'
 class Domain < ActiveRecord::Base
 
   scope_user
-  
+
   default_scope :order => 'name'
 
   belongs_to :user
@@ -38,8 +38,8 @@ class Domain < ActiveRecord::Base
 
   validates_presence_of :master, :if => :slave?
   validates_format_of :master, :if => :slave?,
-    :allow_blank => true,
-    :with => /\A(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\z/
+  :allow_blank => true,
+  :with => /\A(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\z/
 
   # Disable single table inheritence (STI)
   set_inheritance_column 'not_used_here'
@@ -62,7 +62,7 @@ class Domain < ActiveRecord::Base
   def slave?
     read_attribute(:type) == 'SLAVE'
   end
-  
+
   # Are we a master domain
   def master?
     read_attribute(:type) == 'MASTER'
@@ -70,7 +70,7 @@ class Domain < ActiveRecord::Base
 
   # Are we a native domain
   def native?
-    read_attribute(:type) == 'NATIVE'  
+    read_attribute(:type) == 'NATIVE'
   end
 
   # return the records, excluding the SOA record
@@ -111,21 +111,21 @@ class Domain < ActiveRecord::Base
       end
     end
   end
-  
+
   def before_create
     # Invoke before_create hook
-    # The hook should return true if the record is to be saved or false 
+    # The hook should return true if the record is to be saved or false
     # to cancel. If one of the hooks returns false the save is canceled.
     Hook.execute(:on_create, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}
-  end 
-  
+  end
+
   def before_destroy
     # Invoke before_create hook
-    # The hook should return true if the record is to be saved or false 
+    # The hook should return true if the record is to be saved or false
     # to cancel. If one of the hooks returns false the save is canceled.
-    Hook.execute(:on_destroy, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}  
+    Hook.execute(:on_destroy, self).select{|a| a == true || a == false}.inject{|r,e| r&&e}
   end
-  
+
   # Setup an SOA if we have the requirements
   def after_create #:nodoc:
     return if self.slave?

@@ -106,7 +106,7 @@ describe DomainsController, "when creating" do
 
     response.should be_redirect
   end
-  
+
   it "should not ignore type if zone template is selected" do
     zone_template = zone_templates(:east_coast_dc)
 
@@ -115,10 +115,10 @@ describe DomainsController, "when creating" do
       :type => 'MASTER',
       :master => '127.0.0.1',
       :zone_template_id => zone_template.id
-    } 
+    }
   
     assigns[:domain].should be_master
-  end 
+  end
 end
 
 describe DomainsController do
@@ -228,7 +228,6 @@ describe DomainsController, "should handle a REST client" do
       @domain.reload
     }.should raise_error(ActiveRecord::RecordNotFound)
   end
-
 
   it "viewing a list of all zones" do
     get :index, :format => 'xml'

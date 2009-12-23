@@ -11,7 +11,7 @@
     %th Type
     %th Object
     %th Name
-    
+
   - @audits.each do |audit|
     %tr{:class => cycle(:even, :odd)}
       %td= link_to audit.id
@@ -29,7 +29,6 @@
         = audit.revision.name.downcase
       %td
         = link_to t(:details)
-      
       -#%td
         = audit.changes["name"]
         = audit.changes["type"]

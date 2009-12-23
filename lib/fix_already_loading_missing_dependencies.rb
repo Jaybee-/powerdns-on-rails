@@ -1,9 +1,9 @@
 module ActiveSupport
   module Dependencies
     extend self
-    
+
     #def load_missing_constant(from_mod, const_name)
-    
+
     def forgiving_load_missing_constant( from_mod, const_name )
       begin
         old_load_missing_constant(from_mod, const_name)

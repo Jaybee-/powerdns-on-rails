@@ -118,7 +118,7 @@ class DomainsController < ApplicationController
 
   def destroy
     if @domain.destroy
-      respond_to do |wants|      
+      respond_to do |wants|
         wants.html do
           flash[:notice] = t( :message_domain_deleted, :domain => @domain.name )
           redirect_to :action => 'index'

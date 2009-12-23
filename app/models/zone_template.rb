@@ -41,20 +41,20 @@ class ZoneTemplate < ActiveRecord::Base
       # Pick our SOA template out, and populate the zone
       soa_template = record_templates.detect { |r| r.record_type == 'SOA' }
       built_soa_template = soa_template.build( domain.name )
-      
+
       Domain::SOA_FIELDS.each do |f|
         domain.send( "#{f}=", built_soa_template.send( f ) )
       end
-      
+
       # set ttl
       domain.ttl=self.ttl
- 
+
       # save the zone or die
       domain.save!
-      
+
       # get the templates
       templates = record_templates.dup
-      
+
       Record.batch do
         # now build the remaining records according to the templates
         templates.delete( soa_template )
