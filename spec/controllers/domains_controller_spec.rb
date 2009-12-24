@@ -108,7 +108,8 @@ describe DomainsController, "when creating" do
   end
 
   it "should not ignore type if zone template is selected" do
-    zone_template = zone_templates(:east_coast_dc)
+    zone_template = Factory(:zone_template)
+    Factory(:template_soa, :zone_template => zone_template)
 
     post 'create', :domain => {
       :name => 'example.org',

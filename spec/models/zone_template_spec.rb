@@ -108,8 +108,8 @@ describe ZoneTemplate, "when used to build a zone" do
 
   before(:each) do
     @zone_template = Factory( :zone_template )
-    Factory(:template_soa, :zone_template => @zone_template)
-    Factory(:template_ns, :zone_template => @zone_template)
+    Factory(:template_soa,                          :zone_template => @zone_template)
+    Factory(:template_ns,                           :zone_template => @zone_template)
     Factory(:template_ns, :content => 'ns2.%ZONE%', :zone_template => @zone_template)
 
     @domain = @zone_template.build( 'example.org' )
@@ -141,10 +141,10 @@ describe ZoneTemplate, "when used to build a zone" do
 end
 
 describe ZoneTemplate, "when applied to a domain" do
-  fixtures :all
-  
+
   before(:each) do
-    @zone_template = zone_templates( :east_coast_dc )
+    @zone_template = Factory(:zone_template)
+    Factory(:template_soa, :zone_template => @zone_template)
     @domain = Domain.new( :name => "example.org", :ttl => 43200 )
     @zone_template.apply!(@domain)
   end
@@ -155,7 +155,7 @@ describe ZoneTemplate, "when applied to a domain" do
   end
 
   it "should set ttl" do
-    @domain.ttl.should eql( zone_templates( :east_coast_dc ).ttl )
+    @domain.ttl.should eql( @zone_template.ttl )
   end
 end
 
@@ -164,10 +164,10 @@ describe ZoneTemplate, "when used to build a zone for a user" do
   before(:each) do
     @user = Factory(:quentin)
     @zone_template = Factory(:zone_template, :user => @quentin)
-    Factory(:template_soa, :zone_template => @zone_template)
-    Factory(:template_ns, :zone_template => @zone_template)
-    Factory(:template_ns, :name => 'ns2.%ZONE%', :zone_template => @zone_template)
-    Factory(:template_cname, :zone_template => @zone_template)
+    Factory(:template_soa,                          :zone_template => @zone_template)
+    Factory(:template_ns,                           :zone_template => @zone_template)
+    Factory(:template_ns,    :name => 'ns2.%ZONE%', :zone_template => @zone_template)
+    Factory(:template_cname,                        :zone_template => @zone_template)
     Factory(:template_cname, :name => 'www.%ZONE%', :zone_template => @zone_template)
 
     @domain = @zone_template.build( 'example.org', @user )
@@ -211,9 +211,8 @@ end
 describe ZoneTemplate, "and finders" do
 
   before(:each) do
-    zt1 = Factory(:zone_template)
-    Factory(:template_soa, :zone_template => zt1 )
-
+    @zone_template = Factory(:zone_template)
+    Factory(:template_soa, :zone_template => @zone_template)
     Factory(:zone_template, :name => 'No SOA')
   end
 

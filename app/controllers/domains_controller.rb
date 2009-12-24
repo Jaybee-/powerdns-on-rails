@@ -123,7 +123,7 @@ class DomainsController < ApplicationController
           flash[:notice] = t( :message_domain_deleted, :domain => @domain.name )
           redirect_to :action => 'index'
         end
-        wants.xml { render :xml => @domain.errors, :status => :unprocessable_entity }
+        wants.xml { render :xml => @domain.errors, :status => :no_content }
       end
     else
       respond_to do |wants|
