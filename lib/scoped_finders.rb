@@ -58,7 +58,7 @@ module ScopedFinders
 
     # For our lookup purposes
     def search( params, page, user = nil )
-      paginate :per_page => 5, :page => page,
+      paginate :per_page => 50, :page => page,
         :conditions => ['name LIKE ?', "%#{params.chomp}%"],
         :user => user
     end
