@@ -486,7 +486,7 @@ en:
     Re-activates this user
   help_user_delete:
     Delete this user from the system
-  label_user_roles:
+  label_user_role:
     admin: "Admin"
     user: "User"
     domain_owner: "Domain Owner"
