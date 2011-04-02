@@ -6,3 +6,4 @@ config/database.yml
 config/hooks.yml
 tmp/*
 rerun.txt
+db/*.sqlite3
