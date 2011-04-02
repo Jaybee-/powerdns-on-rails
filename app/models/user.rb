@@ -169,7 +169,7 @@ class User < ActiveRecord::Base
       quoted_login = ActiveRecord::Base.connection.quote(self.login)
       Audit.update_all( 
                        "username = #{quoted_login}", 
-                       [ 'user_type = ? AND user_id = ?', self.class.class_name, self.id ] 
+                       [ 'user_type = ? AND user_id = ?', self.class.name, self.id ] 
                        )
     end
 end

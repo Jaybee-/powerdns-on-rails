@@ -101,14 +101,14 @@ module ResourceThis # :nodoc:
         end
         
         def create_#{singular_name}
-          returning true do
+          true.tap do
             @#{singular_name} = finder_base.new(params[:#{singular_name}])
             @created = @#{singular_name}.save
           end
         end
         
         def update_#{singular_name}
-          returning true do
+          true.tap do
             @updated = @#{singular_name}.update_attributes(params[:#{singular_name}])
           end
         end
