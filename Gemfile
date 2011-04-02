@@ -17,3 +17,8 @@ gem "mocha", "0.9.8"
 gem "factory_girl", "1.2.3"
 gem "ZenTest"
 gem "autotest-fsevent"
+
+gem "cucumber"
+gem "cucumber-rails", "0.3.2"
+gem "database_cleaner"
+gem "webrat"
