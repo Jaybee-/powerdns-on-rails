@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 load(File.dirname(__FILE__) + '/schema.rb')
 
-describe Seeder do
+describe SeedFu::Seeder do
   it "should create a model if one doesn't exist" do
     SeededModel.seed(:id) do |s|
       s.id = 1
@@ -43,6 +43,62 @@ describe Seeder do
     SeededModel.find_by_login("bob").first_name.should == "Steve"
   end
   
+  it "should be able to create models from an array of seed attributes" do
+    SeededModel.seed_many(:title, :login, [
+      {:login => "bob", :title => "Peon", :first_name => "Steve"},
+      {:login => "frank", :title => "Peasant", :first_name => "Francis"},
+      {:login => "harry", :title => "Noble", :first_name => "Harry"}
+    ])
+    
+    SeededModel.find_by_login("bob").first_name.should == "Steve"
+    SeededModel.find_by_login("frank").first_name.should == "Francis"
+    SeededModel.find_by_login("harry").first_name.should == "Harry"
+  end
+  
+  it "should update, not create, if constraints are met" do
+    SeededModel.seed(:id) do |s|
+      s.id = 1
+      s.login = "bob"
+      s.first_name = "Bob"
+      s.last_name = "Bobson"
+      s.title = "Peon"
+    end
+    
+    SeededModel.seed(:id) do |s|
+      s.id = 1
+      s.login = "bob"
+      s.first_name = "Robert"
+      s.last_name = "Bobson"
+      s.title = "Peon"
+    end
+    
+    bob = SeededModel.find_by_id(1)
+    bob.first_name.should == "Robert"
+    bob.last_name.should == "Bobson"
+  end
+  
+  it "should create but not update with seed_once" do
+    SeededModel.seed_once(:id) do |s|
+      s.id = 1
+      s.login = "bob"
+      s.first_name = "Bob"
+      s.last_name = "Bobson"
+      s.title = "Peon"
+    end
+    
+    SeededModel.seed_once(:id) do |s|
+      s.id = 1
+      s.login = "bob"
+      s.first_name = "Robert"
+      s.last_name = "Bobson"
+      s.title = "Peon"
+    end
+    
+    bob = SeededModel.find_by_id(1)
+    bob.first_name.should == "Bob"
+    bob.last_name.should == "Bobson"
+  end
+  
   #it "should raise an error if constraints are not unique" do
   #  SeededModel.create(:login => "bob", :first_name => "Bob", :title => "Peon")
   #  SeededModel.create(:login => "bob", :first_name => "Robert", :title => "Manager")
@@ -54,7 +110,6 @@ describe Seeder do
   #end
   
   it "should default to an id constraint"
-  it "should update, not create, if constraints are met"
   it "should require that all constraints are defined"
   it "should raise an error if validation fails"
   it "should retain fields that aren't specifically altered in the seeding"

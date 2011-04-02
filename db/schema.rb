@@ -9,24 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090505124622) do
+ActiveRecord::Schema.define(:version => 20110402212527) do
 
   create_table "audits", :force => true do |t|
     t.integer  "auditable_id"
     t.string   "auditable_type"
-    t.integer  "auditable_parent_id"
-    t.string   "auditable_parent_type"
     t.integer  "user_id"
     t.string   "user_type"
     t.string   "username"
     t.string   "action"
     t.text     "changes"
-    t.integer  "version",               :default => 0
+    t.integer  "version",        :default => 0
     t.datetime "created_at"
   end
 
   add_index "audits", ["auditable_id", "auditable_type"], :name => "auditable_index"
-  add_index "audits", ["auditable_parent_id", "auditable_parent_type"], :name => "auditable_parent_index"
   add_index "audits", ["created_at"], :name => "index_audits_on_created_at"
   add_index "audits", ["user_id", "user_type"], :name => "user_index"
 
