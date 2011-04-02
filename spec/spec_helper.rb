@@ -53,5 +53,5 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
 
-Factory.definition_file_paths << Rails.root.join( 'spec', 'factories' )
+Factory.definition_file_paths << Rails.root.join('spec', 'factories')
 Factory.find_definitions

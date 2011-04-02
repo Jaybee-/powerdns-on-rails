@@ -21,7 +21,7 @@ Webrat.configure do |config|
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser
 end
 
-Factory.definition_file_paths << Rails.root.join( 'spec', 'factories' )
+Factory.definition_file_paths << Rails.root.join('spec', 'factories')
 Factory.find_definitions
 
 # If you set this to false, any error raised from within your app will bubble 

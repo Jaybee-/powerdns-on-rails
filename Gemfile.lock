@@ -12,8 +12,6 @@ GEM
     activeresource (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
-    acts_as_audited (1.1.1)
-      activerecord (>= 2.1)
     autotest-fsevent (0.2.5)
       sys-uname
     builder (3.0.0)
@@ -64,7 +62,6 @@ PLATFORMS
 
 DEPENDENCIES
   ZenTest
-  acts_as_audited (~> 1.1.1)
   autotest-fsevent
   cucumber
   cucumber-rails (= 0.3.2)
