@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20110402212527) do
     t.string   "content"
     t.integer  "ttl"
     t.integer  "prio"
-    t.integer  "position",                      :null => false
+    t.integer  "position"
     t.boolean  "active",      :default => true
     t.string   "note"
     t.datetime "created_at"
