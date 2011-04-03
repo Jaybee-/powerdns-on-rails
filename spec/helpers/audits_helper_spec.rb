@@ -115,7 +115,7 @@ describe AuditsHelper, "link_to_record_audit" do
     end
   end
 
-  it "should handle records without a 'type' key in the changes hash" do
+  it "should handle records without a \"type\" key in the changes hash" do
     domain = Factory(:domain)
     audit = Audit.new(
       :auditable => Factory(:a, :domain => domain),
@@ -130,7 +130,7 @@ describe AuditsHelper, "link_to_record_audit" do
     result.should match(/A \(example\.com\) 1 create by admin/)
   end
 
-  it "should handle removed records without a 'type' key in the changes hash" do
+  it "should handle removed records without a \"type\" key in the changes hash" do
     audit = Audit.new(
       :auditable => nil,
       :auditable_parent => Factory(:domain),

@@ -11,6 +11,7 @@ module AuditsHelper
   end
   
   def link_to_record_audit( audit )
+    
     caption = audit.changes['type']
     caption ||= (audit.auditable.nil? ? '[UNKNOWN]' : audit.auditable.class.to_s )
     unless audit.changes['name'].nil?
@@ -38,7 +39,9 @@ module AuditsHelper
   end
   
   def sort_audits_by_date( collection )
-    collection.sort_by(&:created_at).reverse
+    #debugger
+    #collection.sort_by(&:created_at).reverse
+    collection
   end
 
   def audit_user( audit )

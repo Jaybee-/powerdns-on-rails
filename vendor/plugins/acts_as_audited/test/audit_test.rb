@@ -176,4 +176,35 @@ class AuditTest < Test::Unit::TestCase
     end
   end
 
+  context "parent record tracking" do
+    class ::Author < ActiveRecord::Base
+      has_many :books
+    end
+    class ::Book < ActiveRecord::Base
+      belongs_to :author
+      acts_as_audited :parent => :author
+    end
+
+    setup do
+      @author = Author.create!( :name => 'Kenneth Kalmer' )
+      @book = Book.create!( :title => 'Open Sourcery 101', :author => @author )
+    end
+
+    should "give parents access to child changes" do
+      assert_respond_to @author, :book_audits
+      assert_respond_to @author, :child_record_audits
+    end
+
+    should "allow detection of audited parent" do
+      assert_respond_to @author, :audited_parent?
+    end
+
+    should "track the parent in child audits" do
+      assert_equal @book.audits.first.auditable_parent, @author
+      assert_equal @author.book_audits.first.auditable, @book
+
+      assert_equal @author.child_record_audits, @author.book_audits
+    end
+  end
+
 end
