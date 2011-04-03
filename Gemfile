@@ -8,6 +8,8 @@ gem "pgsql"   if Gem.available? "pgsql"
 
 gem "haml", ">= 3.0.16"
 gem "awesome_print"
+gem "will_paginate", "~> 2.3.11"
+gem "seed-fu", "~> 1.2.3"
 
 group :test, :development do
   gem "ruby-debug"
