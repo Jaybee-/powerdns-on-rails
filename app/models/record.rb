@@ -39,16 +39,6 @@ class Record < ActiveRecord::Base
       self.batch_soa_updates = nil
     end
 
-    # Make some ammendments to the acts_as_audited assumptions
-    def configure_audits
-      record_types.map(&:constantize).each do |klass|
-        defaults = [klass.non_audited_columns ].flatten
-        defaults.delete( klass.inheritance_column )
-        defaults.push( :change_date )
-        klass.write_inheritable_attribute :non_audited_columns, defaults.flatten.map(&:to_s)
-      end
-    end
-
   end
   
   # Strip whitespace from beginning and end
@@ -88,11 +78,6 @@ class Record < ActiveRecord::Base
       self.domain.soa_record.update_serial!
       @serial_updated = true
     end
-  end
-
-  # Force acts_as_audited to record all attributes when a record is destroyed
-  def audit_destroy(user = nil)
-    write_audit(:action => 'destroy', :auditable_parent => auditable_parent, :changes => audited_attributes, :user => user)
   end
 
   # By default records don't support priorities. Those who do can overwrite

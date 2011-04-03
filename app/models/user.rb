@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   
   before_save :encrypt_password
-  after_destroy :persist_audits
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -23,7 +22,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :domains, :dependent => :nullify
   has_many :zone_templates, :dependent => :nullify
-  has_many :audits, :as => :user
   
   acts_as_state_machine :initial => :active
   state :active, :enter => :do_activate
@@ -163,13 +161,5 @@ class User < ActiveRecord::Base
       @activated = true
       self.activated_at = Time.now.utc
       self.deleted_at = self.activation_code = nil
-    end
-    
-    def persist_audits
-      quoted_login = ActiveRecord::Base.connection.quote(self.login)
-      Audit.update_all( 
-                       "username = #{quoted_login}", 
-                       [ 'user_type = ? AND user_id = ?', self.class.name, self.id ] 
-                       )
     end
 end

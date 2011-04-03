@@ -55,8 +55,6 @@ ActionController::Routing::Routes.draw do |map|
     macro.resources :macro_steps
   end
 
-  # Audits
-  map.audits '/audits/:action/:id', :controller => 'audits', :action => 'index'
   map.reports '/reports/:action/:id' , :controller => 'reports' , :action => 'index'
 
   # AuthTokens

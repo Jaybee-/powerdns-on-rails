@@ -30,7 +30,6 @@ h2. Features (current and planned)
 * Conversion and import tools
 * Zone/Record Templates
 * DNS Insight
-* Full audit record of all changes
 * Macros for easy bulk updating of domains
 * Support for PowerDNS MASTER, NATIVE & SLAVE record types
 

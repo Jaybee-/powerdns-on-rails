@@ -222,22 +222,3 @@ describe User, "and roles" do
   end
 end
 
-describe User, "and audits" do
-
-  it "should have username persisted in audits when removed" do
-    admin = Factory(:admin)
-    Audit.as_user( admin ) do
-      domain =Factory(:domain)
-      audit = domain.audits.first
-
-      audit.user.should eql( admin )
-      audit.username.should be_nil
-
-      admin.destroy
-      audit.reload
-
-      audit.user.should eql( 'admin' )
-      audit.username.should eql('admin')
-    end
-  end
-end
