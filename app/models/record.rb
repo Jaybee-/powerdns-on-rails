@@ -20,9 +20,10 @@ class Record < ActiveRecord::Base
   # implemented in #SOA
   attr_accessor :primary_ns, :contact, :refresh, :retry, :expire, :minimum
 
-  before_save :update_change_date
-  after_save  :update_soa_serial
-
+  before_save   :update_change_date
+  after_save    :update_soa_serial
+  after_destroy :update_soa_serial
+  
   # Known record types
   @@record_types = ['A', 'AAAA', 'CNAME', 'LOC', 'MX', 'NS', 'PTR', 'SOA', 'SPF', 'SRV', 'SSHFP', 'TXT']
   cattr_reader :record_types
