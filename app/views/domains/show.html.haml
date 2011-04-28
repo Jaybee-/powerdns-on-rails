@@ -7,7 +7,6 @@
   #note-new=t :note_new
   #note-edit=t :note_edit
   #delete-zone=t :help_delete_zone
-  #audits=t :help_audits
   #macro=t :help_macro
   #change-owner=t :help_change_owner
   #help-primary-ns=t :help_domain_primary_ns
@@ -43,7 +42,6 @@
       %td
         - if current_user
           = link_to prototip_info_icon('table_edit.png', 'zone-edit'), edit_domain_path(@domain)
-          = link_to prototip_info_icon('report_magnify.png', 'audits'), audits_path(:action => :domain, :id => @domain)
           - unless @domain.slave?
             = link_to prototip_info_icon('brick_go.png', 'macro'), apply_macro_domain_path( @domain )
           - if current_user.admin? && @domain.user

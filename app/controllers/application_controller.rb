@@ -10,14 +10,6 @@ class ApplicationController < ActionController::Base
   # gives you the require_role helpers, and others.
   include RoleRequirementSystem
 
-  # Enable audits
-  audit_params = [ Domain ]
-  # For my own sanity: This gives us [ A => { :parent => :domain }, NS => { :parent => :domain }, .. ]
-  audit_params << Record.record_types.map(&:constantize).inject({}) { |memo, t| memo[t] = { :parent => :domain }; memo }
-  audit *audit_params
-
-  Record.configure_audits
-
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details Uncomment the

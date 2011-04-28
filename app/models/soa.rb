@@ -86,15 +86,8 @@ class SOA < Record
 
   # Same as #update_serial and saves the record
   def update_serial!
-    if respond_to?( :without_auditing )
-      without_auditing do
-        update_serial
-        save
-      end
-    else
-      update_serial
-      save
-    end
+    update_serial
+    save
   end
 
   # Nicer representation of the domain as XML

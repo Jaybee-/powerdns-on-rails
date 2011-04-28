@@ -1,1 +1,0 @@
-require 'lib/acts_as_audited_patch'

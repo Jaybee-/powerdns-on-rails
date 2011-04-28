@@ -118,30 +118,6 @@ en:
   layout_menu_reports: "Reports"
   layout_menu_logout: "Logout"
 
-# Audits _domain_audit
-  label_audit_time: "Time:"
-  label_audit_changes: "Changes:"
-
-# Audits domain
-  title_audit_information_for: "Audit information for"
-  text_audit_click_on_revision_for_detail:
-    You can click on any revision number on the lists below to see the details
-    of the revision
-  title_audit_domain_revisions: "Domain Revisions"
-  text_audit_no_domain_revisions:
-    No revisions found for the domain.
-  title_audit_rr_revisions: "RR Revisions"
-  text_audit_order_description:
-    Revisions below sorted in reverse chronoligical order.
-  text_audit_no_resource_revision:
-    No revisions found for any resource records of the domain.
-  label_audit_no_domain_revisions: "No revisions found for the domain."
-
-# Audits index
-  title_audit_search_logs: "Search audit logs"
-  text_audit_comming_soon:
-    Coming soon!
-
 # Dashboard index
   label_last_x_domains: "Latest %{value} domains"
   label_new_domain: "New domain"
@@ -244,8 +220,6 @@ en:
     Edit the domains's current note
   help_delete_zone:
     Permantly remove this domain from the system
-  help_audits:
-    Views the audits/history for this domain
   help_macro:
     Select a macro and run it against this domain
   help_change_owner:
@@ -561,8 +535,6 @@ en:
 
 ### Helpers
 
-# audits_helper
-# TODO: is this for translation?
 
 # prototip_helper
   title_helper_quick_help: "Quick Help"
